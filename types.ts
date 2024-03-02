@@ -37,3 +37,19 @@ export interface Color {
   name: string;
   value: string;
 };
+
+
+// Create a type for the roles
+export enum Roles {
+  Seller = "seller",
+  Buyer = "buyer",
+  notDefined = "notDefined"
+}
+
+declare global {
+  interface CustomJwtSessionClaims {
+    metadata: {
+      role?: Roles
+    };
+  }
+}

@@ -5,6 +5,8 @@ import Container from "@/components/ui/container";
 import NavbarActions from "@/components/navbar-actions";
 import getCategories from "@/actions/get-categories";
 
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 const Navbar = async () => {
   const categories = await getCategories();
 
@@ -16,7 +18,20 @@ const Navbar = async () => {
             <p className="font-bold text-xl">STORE</p>
           </Link>
           <MainNav data={categories} />
-          <NavbarActions />
+          
+          <div className="ml-auto flex items-center gap-x-4">
+
+            <NavbarActions />
+
+            <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+            </SignedIn>
+
+            <SignedOut>
+                <SignInButton />
+            </SignedOut>
+
+          </div>
         </div>
       </Container>
     </div>

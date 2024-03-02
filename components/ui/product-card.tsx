@@ -37,13 +37,15 @@ const ProductCard: React.FC<ProductCard> = ({
 
     cart.addItem(data);
   };
+
+  const placeholderURL = "https://res.cloudinary.com/deo0gfshc/image/upload/v1709099534/kqfrigvpdsveynnd78rq.png"
   
   return ( 
     <div onClick={handleClick} className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
       {/* Image & actions */}
       <div className="aspect-square rounded-xl bg-gray-100 relative">
         <Image 
-          src={data.images?.[0]?.url} 
+          src={data.images?.[0]?.url || placeholderURL} 
           alt="" 
           fill
           className="aspect-square object-cover rounded-md"

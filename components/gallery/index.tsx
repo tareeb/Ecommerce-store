@@ -14,6 +14,17 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({
   images = []
 }) => {
+
+  if (images.length === 0) {
+    console.log('Gallery: No images provided');
+    images = [
+      {
+        id: 'a5730b66-5180-4c1b-bf25-13118f6bfedf',
+        url: 'https://res.cloudinary.com/deo0gfshc/image/upload/v1709099534/kqfrigvpdsveynnd78rq.png'
+      }
+    ]
+  }
+
   return ( 
     <Tab.Group as="div" className="flex flex-col-reverse">
       <div className="mx-auto mt-6 hidden w-full max-w-2xl sm:block lg:max-w-none">

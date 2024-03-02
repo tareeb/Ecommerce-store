@@ -1,40 +1,61 @@
 "use client";
 
 import axios from "axios";
-import { useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import { toast } from "react-hot-toast";
 
+import { useUser } from "@clerk/nextjs";
+
+
 const Summary = () => {
-  const searchParams = useSearchParams();
+
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
-  useEffect(() => {
-    if (searchParams.get('success')) {
-      toast.success('Payment completed.');
-      removeAll();
-    }
+  const { isSignedIn, user } = useUser();
 
-    if (searchParams.get('canceled')) {
-      toast.error('Something went wrong.');
-    }
-  }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total, item) => {
     return total + Number(item.price)
   }, 0);
 
   const onCheckout = async () => {
+
+    if(!isSignedIn){
+      toast.error("Sign in to place order");
+      return;
+    }
+
+    if(items.length === 0){
+      toast.error("No items in cart");
+      return;
+    }
+
+    if(!user){
+      toast.error("User not found");
+      return;
+    }
+
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkout`, {
-      productIds: items.map((item) => item.id)
+      productIds: items.map((item) => item.id),
+      userId: user?.id
     });
 
-    window.location = response.data.url;
+    console.log(response.data.status);
+
+    if (response.data.status == 500){
+      toast.error(response.data.message);
+    }
+
+    if(response.data.message === "success"){
+      removeAll();
+      toast.success("Order placed successfully");
+    }
+    
+
   }
 
   return ( 
@@ -50,9 +71,13 @@ const Summary = () => {
          <Currency value={totalPrice} />
         </div>
       </div>
+
       <Button onClick={onCheckout} disabled={items.length === 0} className="w-full mt-6">
         Checkout
       </Button>
+
+      
+
     </div>
   );
 }
