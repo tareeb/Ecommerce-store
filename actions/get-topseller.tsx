@@ -1,6 +1,6 @@
 import { Product } from "@/types";
 
-const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/recommendations`;
+const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/topselling`;
 const product_URL =`${process.env.NEXT_PUBLIC_API_URL}/products/getlist`;
 
 const getTopSellerProducts = async () : Promise<Product[]> => {    
@@ -14,7 +14,7 @@ const getTopSellerProducts = async () : Promise<Product[]> => {
             return [] ;
         }
 
-        const topsellingproducts = data.top_selling_products ;
+        const topsellingproducts = data.products ;
 
         const requestOptions = {
             method: 'POST',

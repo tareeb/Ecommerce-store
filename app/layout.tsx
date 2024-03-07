@@ -29,9 +29,11 @@ export default function RootLayout({
         <body className={font.className}>
           <ToastProvider />
           <ModalProvider />
-          <Navbar />
-          {children}
-          <Footer />
+          <div className='bg-gradient-to-b from-rose-100 to-amber-100'>
+            <Navbar />
+              {children}
+            <Footer />
+          </div>
         </body>
       </html>
     </ClerkProvider>

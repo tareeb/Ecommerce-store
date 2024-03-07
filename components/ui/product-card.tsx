@@ -41,14 +41,17 @@ const ProductCard: React.FC<ProductCard> = ({
   const placeholderURL = "https://res.cloudinary.com/deo0gfshc/image/upload/v1709099534/kqfrigvpdsveynnd78rq.png"
   
   return ( 
-    <div onClick={handleClick} className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
+    <div onClick={handleClick} className=" bg-gradient-to-b from-blue-200 to-white group overflow-hidden
+      cursor-pointer pb-5 rounded-full space-y-4">
+
       {/* Image & actions */}
-      <div className="aspect-square rounded-xl bg-gray-100 relative">
+      <div className="aspect-square relative">
         <Image 
           src={data.images?.[0]?.url || placeholderURL} 
-          alt="" 
+          alt={data.name} 
           fill
-          className="aspect-square object-cover rounded-md"
+          className="aspect-square object-cover rounded-md h-90
+                     transition-transform duration-300 transform hover:scale-110"
         />
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">
@@ -64,13 +67,15 @@ const ProductCard: React.FC<ProductCard> = ({
         </div>
       </div>
       {/* Description */}
-      <div>
-        <p className="font-semibold text-lg">{data.name}</p>
-        <p className="text-sm text-gray-500">{data.category?.name}</p>
-      </div>
-      {/* Price & Reiew */}
-      <div className="flex items-center justify-between">
-        <Currency value={data?.price} />
+      <div className="text-center space-y-2 p-1">
+        <div>
+          <p className="font-medium text-lg">{data.name}</p>
+          <p className="text-sm text-gray-500">{data.category?.name}</p>
+        </div>
+        {/* Price & Reiew */}
+        <div>
+          <Currency value={data?.price} />
+        </div>  
       </div>
     </div>
   );

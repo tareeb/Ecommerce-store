@@ -2,10 +2,10 @@ import { Product } from "@/types";
 
 //These are products recommended to user based on user profile
 
-const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/basedoncustomers`;
+const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/cust_freq_purchased`;
 const product_URL =`${process.env.NEXT_PUBLIC_API_URL}/products/getlist`;
 
-const getProductsBasedonUser = async (id : string) : Promise<Product[]> => {    
+const getCustFreqPurchase = async (id : string) : Promise<Product[]> => {    
     try{    
 
         const res = await fetch(`${URL}\?name=${id}`);
@@ -16,7 +16,7 @@ const getProductsBasedonUser = async (id : string) : Promise<Product[]> => {
             return [] ;
         }
 
-        const recommended_products = data.recommended_products ;
+        const recommended_products = data.products ;
 
         const requestOptions = {
             method: 'POST',
@@ -38,4 +38,4 @@ const getProductsBasedonUser = async (id : string) : Promise<Product[]> => {
 
 };
 
-export default getProductsBasedonUser;
+export default getCustFreqPurchase;

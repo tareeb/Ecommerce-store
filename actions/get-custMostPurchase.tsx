@@ -1,14 +1,14 @@
 import { Product } from "@/types";
 
-//These are products are similar to product selected
+//These are products recommended to user based on user profile
 
-const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/similarproducts`;
+const URL = `${process.env.NEXT_PUBLIC_Recommendation_API_URL}/cust_most_purchased`;
 const product_URL =`${process.env.NEXT_PUBLIC_API_URL}/products/getlist`;
 
-const getSimilarProducts = async (name : string) : Promise<Product[]> => {    
-    try{
-        
-        const res = await fetch(`${URL}\?prod=${name}`);
+const getCustMostPurchase = async (id : string) : Promise<Product[]> => {    
+    try{    
+
+        const res = await fetch(`${URL}\?name=${id}`);
         const data = await res.json();
 
         if (data.error){
@@ -17,7 +17,7 @@ const getSimilarProducts = async (name : string) : Promise<Product[]> => {
         }
 
         const recommended_products = data.products ;
-        
+
         const requestOptions = {
             method: 'POST',
             headers: {
@@ -35,6 +35,7 @@ const getSimilarProducts = async (name : string) : Promise<Product[]> => {
         console.error(error);
         return [] ; 
     }
+
 };
 
-export default getSimilarProducts;
+export default getCustMostPurchase;

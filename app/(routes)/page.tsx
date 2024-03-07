@@ -3,11 +3,16 @@ import getProducts from "@/actions/get-products";
 
 import getMostPopularProducts from "@/actions/get-mostpopular";
 import getTopSellerProducts from "@/actions/get-topseller";
-import getProductsBasedonUser from "@/actions/get-recommendedProducts";
+
+import getCustFreqPurchase from "@/actions/get-custFreqPurchase";
+import getCustMostPurchase from "@/actions/get-custMostPurchase";
+import getCustRecommendations from "@/actions/get-custRecommendations";
 
 import ProductList from "@/components/product-list";
 import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
+
+import HeroSection from "@/components/herosection";
 
 import { auth } from "@clerk/nextjs";
 
@@ -28,10 +33,15 @@ const HomePage = async () => {
   const MostPopularProducts = await getMostPopularProducts();
   const TopSellerProducts = await getTopSellerProducts();
   
-  let recommendedProducts : Product[] = [];
+  let custRecommendations : Product[] = [];
+  let custFreqPurchase : Product[] = [];
+  let custMostPurchase : Product[] = [];
+
   if(userId){
     const customerId = getCustomerId(userId);
-    recommendedProducts = await getProductsBasedonUser(customerId);
+    custRecommendations = await getCustRecommendations(customerId);
+    custFreqPurchase = await getCustFreqPurchase(customerId);
+    custMostPurchase = await getCustMostPurchase(customerId);
   }
 
 
@@ -43,22 +53,34 @@ const HomePage = async () => {
           data={billboard}
         />
 
+        {/* <HeroSection/> */}
+
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
           <ProductList title="Featured Products" items={products} />
         </div>
 
         <SignedIn>
-        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Products For You" items={recommendedProducts.slice(0,8)} />   
-        </div>
+
+            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+              <ProductList title="Products You May Like" items={custRecommendations} />   
+            </div>
+
+            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+              <ProductList title="Frequently Purchased By You" items={custFreqPurchase} />
+            </div>
+
+            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+              <ProductList title="Most Purchases By You" items={custMostPurchase} />
+            </div>
+
         </SignedIn>
 
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Most Popular Products" items={MostPopularProducts.slice(0,8)} />   
+          <ProductList title="Most Popular Products" items={MostPopularProducts} />   
         </div>
 
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Top Selling Products" items={TopSellerProducts.slice(0,8)} />   
+          <ProductList title="Top Sellers Across the Store" items={TopSellerProducts} />   
         </div>
 
       </div>
