@@ -9,10 +9,11 @@ import getCustMostPurchase from "@/actions/get-custMostPurchase";
 import getCustRecommendations from "@/actions/get-custRecommendations";
 
 import ProductList from "@/components/product-list";
-import Billboard from "@/components/ui/billboard";
 import Container from "@/components/ui/container";
 
+import Billboard from "@/components/ui/billboard";
 import HeroSection from "@/components/herosection";
+import ServiceSection from "@/components/service-section";
 
 import { auth } from "@clerk/nextjs";
 
@@ -47,7 +48,6 @@ const HomePage = async () => {
 
   return (
     <Container>
-      <div className="space-y-10 pb-10">
 
         <Billboard 
           data={billboard}
@@ -55,35 +55,54 @@ const HomePage = async () => {
 
         {/* <HeroSection/> */}
 
-        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Featured Products" items={products} />
+        <div className="bg-slate-300">
+            <ProductList 
+              title="Featured Products" 
+              subtitle="New Arrivals in the Store" 
+              items={products} />
         </div>
+
+        <ServiceSection />
 
         <SignedIn>
 
-            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-              <ProductList title="Products You May Like" items={custRecommendations} />   
+            <div className=" bg-slate-200">
+              <ProductList 
+                title="Products You May Like"  
+                subtitle="Recommended Products Tailored for You"
+                items={custRecommendations} />   
             </div>
 
-            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-              <ProductList title="Frequently Purchased By You" items={custFreqPurchase} />
+            <div className=" bg-slate-300">
+              <ProductList 
+                title="Your Repeat Favorites" 
+                subtitle="Items You Love and Keep Coming Back To"
+                items={custFreqPurchase} />
             </div>
 
-            <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-              <ProductList title="Most Purchases By You" items={custMostPurchase} />
+            <div className=" bg-slate-200">
+              <ProductList 
+                title="Your Most Purchased" 
+                subtitle="Most Bought Items by You"
+                items={custMostPurchase} />
             </div>
 
         </SignedIn>
 
-        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Most Popular Products" items={MostPopularProducts} />   
+        <div className=" bg-slate-300">
+          <ProductList 
+            title="Most Popular" 
+            subtitle="Trending Products in the Store"
+            items={MostPopularProducts} />   
         </div>
 
-        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Top Sellers Across the Store" items={TopSellerProducts} />   
+        <div className=" bg-slate-200">
+          <ProductList 
+            title="Top Sellers" 
+            subtitle="Bestsellers of the Moment Storewide"
+            items={TopSellerProducts} />   
         </div>
 
-      </div>
     </Container>
   )
 };

@@ -42,7 +42,8 @@ const ProductCard: React.FC<ProductCard> = ({
   
   return ( 
     <div onClick={handleClick} className=" bg-gradient-to-b from-blue-200 to-white group overflow-hidden
-      cursor-pointer pb-5 rounded-full space-y-4">
+      cursor-pointer pb-5 rounded-full space-y-4 shadow-slate-600 shadow-md
+      transition duration-300 hover:shadow-lg hover:shadow-slate-800 max-w-[200px] max-h-[350px]">
 
       {/* Image & actions */}
       <div className="aspect-square relative">
@@ -50,8 +51,7 @@ const ProductCard: React.FC<ProductCard> = ({
           src={data.images?.[0]?.url || placeholderURL} 
           alt={data.name} 
           fill
-          className="aspect-square object-cover rounded-md h-90
-                     transition-transform duration-300 transform hover:scale-110"
+          className="aspect-square object-cover rounded-md h-90"
         />
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
           <div className="flex gap-x-6 justify-center">

@@ -1,4 +1,4 @@
-import { Urbanist } from 'next/font/google'
+import { Urbanist , Satisfy } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 
 
@@ -10,6 +10,7 @@ import Footer from '@/components/footer'
 import './globals.css'
 
 const font = Urbanist({ subsets: ['latin'] })
+const font2 = Satisfy({ subsets: ['latin'] , weight: ['400'] , variable : '--satisfy' })
 
 export const metadata = {
   title: 'Store',
@@ -25,15 +26,13 @@ export default function RootLayout({
     <ClerkProvider
       afterSignInUrl="/"
       afterSignUpUrl="/onboarding">
-      <html lang="en">
+      <html lang="en" className={`${font2.variable}`}>
         <body className={font.className}>
           <ToastProvider />
           <ModalProvider />
-          <div className='bg-gradient-to-b from-rose-100 to-amber-100'>
             <Navbar />
               {children}
             <Footer />
-          </div>
         </body>
       </html>
     </ClerkProvider>
